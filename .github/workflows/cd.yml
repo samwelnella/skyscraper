@@ -15,11 +15,14 @@ jobs:
         # This should work with only the `include`s but it currently doesn't because of this bug:
         # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/td-p/29558
         target: 
+          - windows-x86_64
           - osx-x86_64
           - linux-x86_64
           - android-aarch64
           - android-arm
         include:
+          - os: windows-latest
+            target: windows-x86_64
           - os: macos-latest
             target: osx-x86_64
           - os: ubuntu-latest
@@ -31,6 +34,18 @@ jobs:
     steps:
     - name: Checkout sources
       uses: actions/checkout@master
+    - name: Install Qt
+      if: startsWith(matrix.os, 'windows')
+      uses: jurplel/install-qt-action@master
+      with:
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_msvc2019_64'
+        install-deps: 'true'
+        modules: 'qtwebengine'
+        archives: 'qtbase'
+        cache: 'false'
+        tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
     - name: Install deps
       run: bash ./scripts/deps "${{ matrix.target }}"
     - name: Build
