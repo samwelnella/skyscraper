@@ -34,7 +34,7 @@ jobs:
     - name: Install deps
       run: bash ./scripts/deps "${{ matrix.target }}"
     - name: Build
-      run: bash ./update_skyscraper.sh "${{ matrix.target }}"
+      run: bash ./scripts/install "${{ matrix.target }}"
     - name: Test
       run: bash ./scripts/test "${{ matrix.target }}" 
     - name: Zip
