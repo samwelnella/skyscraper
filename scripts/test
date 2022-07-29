@@ -15,7 +15,7 @@ main() {
    case "${1:-}" in
       "android-aarch64") _test_android "aarch64";;
       "android-arm") _test_android "ARM" ;;
-      *) Skyscraper -h | grep 'modded by' ;;
+      *) Skyscraper -h | grep 'Running' ;;
    esac
 }
 
