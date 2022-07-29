@@ -30,7 +30,7 @@ jobs:
             target: android-arm
     steps:
     - name: Checkout sources
-      uses: actions/checkout@v2
+      uses: actions/checkout@master
     - name: Install deps
       run: ./scripts/deps "${{ matrix.target }}"
     - name: Build
@@ -43,7 +43,7 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - name: Upload
-      uses: svenstaro/upload-release-action@v1-release
+      uses: svenstaro/upload-release-action@master
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./target/skyscraper.tar.gz
