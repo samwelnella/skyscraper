@@ -9,8 +9,8 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@master
       - name: Install deps
-        run: ./scripts/deps
+        run: bash ./scripts/deps
       - name: Build
-        run: ./update_skyscraper.sh
+        run: bash ./update_skyscraper.sh
       - name: Test
-        run: ./scripts/test
+        run: bash ./scripts/test

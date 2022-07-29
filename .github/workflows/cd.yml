@@ -32,13 +32,13 @@ jobs:
     - name: Checkout sources
       uses: actions/checkout@master
     - name: Install deps
-      run: ./scripts/deps "${{ matrix.target }}"
+      run: bash ./scripts/deps "${{ matrix.target }}"
     - name: Build
-      run: ./update_skyscraper.sh "${{ matrix.target }}"
+      run: bash ./update_skyscraper.sh "${{ matrix.target }}"
     - name: Test
-      run: ./scripts/test "${{ matrix.target }}" 
+      run: bash ./scripts/test "${{ matrix.target }}" 
     - name: Zip
-      run: ./scripts/zip
+      run: bash ./scripts/zip
     - name: Version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
