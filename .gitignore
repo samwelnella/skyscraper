@@ -1,0 +1,10 @@
+*.o
+moc_*
+*.tmp
+*.bk
+Makefile
+.qmake*
+Skyscraper.app/**/*
+packages
+*-packages
+target
