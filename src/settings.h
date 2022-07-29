@@ -49,6 +49,7 @@ struct Settings {
   QString coversFolder = "";
   QString wheelsFolder = "";
   QString marqueesFolder = "";
+  QString texturesFolder = "";
   QString videosFolder = "";
   QString importFolder = "import";
   QString nameTemplate = "";
@@ -115,6 +116,8 @@ struct Settings {
   bool skipExistingWheels = false;
   bool cacheMarquees = true;
   bool skipExistingMarquees = false;
+  bool skipExistingTextures = false;
+  bool cacheTextures = true;
   
   QString user = "";
   QString password = "";

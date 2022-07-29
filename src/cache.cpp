@@ -59,6 +59,9 @@ bool Cache::createFolders(const QString &scraper)
     if(!cacheDir.mkpath(cacheDir.absolutePath() + "/marquees/" + scraper)) {
       return false;
     }
+    if (!cacheDir.mkpath(cacheDir.absolutePath() + "/textures/" + scraper)) {
+      return false;
+    }
     if(!cacheDir.mkpath(cacheDir.absolutePath() + "/videos/" + scraper)) {
       return false;
     }
@@ -150,7 +153,7 @@ bool Cache::read()
       resource.value = xml.readElementText();
       if(resource.type == "cover" || resource.type == "screenshot" ||
 	 resource.type == "wheel" || resource.type == "marquee" ||
-	 resource.type == "video") {
+	 resource.type == "texture" || resource.type == "video") {
 	if(!QFileInfo::exists(cacheDir.absolutePath() + "/" + resource.value)) {
 	  printf("Source file '%s' missing, skipping entry...\n",
 		 resource.value.toStdString().c_str());
@@ -225,6 +228,13 @@ void Cache::printPriorities(QString cacheId)
     printf("\033[1;31mNO\033[0m' ()\n");
   } else {
     printf("\033[1;32mYES\033[0m' (%s)\n", game.marqueeSrc.toStdString().c_str());
+  }
+  printf("Texture:          '");
+  if (game.textureSrc.isEmpty()) {
+    printf("\033[1;31mNO\033[0m' ()\n");
+  } else {
+    printf("\033[1;32mYES\033[0m' (%s)\n",
+           game.textureSrc.toStdString().c_str());
   }
   printf("Video:          '");
   if(game.videoSrc.isEmpty()) {
@@ -473,6 +483,7 @@ void Cache::editResources(QSharedPointer<Queue> queue,
 	     resources.at(a).type != "cover" &&
 	     resources.at(a).type != "wheel" &&
 	     resources.at(a).type != "marquee" &&
+	     resources.at(a).type != "texture" &&
 	     resources.at(a).type != "video") {
 	    printf("\033[1;33m%d\033[0m) \033[1;33m%s\033[0m (%s): '\033[1;32m%s\033[0m'\n", b, resources.at(a).type.toStdString().c_str(),
 		   resources.at(a).source.toStdString().c_str(),
@@ -636,7 +647,7 @@ bool Cache::purgeResources(QString purgeStr)
     if(remove) {
       if(res.type == "cover" || res.type == "screenshot" ||
 	 res.type == "wheel" || res.type == "marquee" ||
-	 res.type == "video") {
+	 res.type == "texture" || res.type == "video") {
 	if(!QFile::remove(cacheDir.absolutePath() + "/" + res.value)) {
 	  printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
 	  continue;
@@ -680,7 +691,7 @@ bool Cache::purgeAll(const bool unattend)
     Resource res = it.next();
     if(res.type == "cover" || res.type == "screenshot" ||
        res.type == "wheel" || res.type == "marquee" ||
-       res.type == "video") {
+       res.type == "texture" || res.type == "video") {
       if(!QFile::remove(cacheDir.absolutePath() + "/" + res.value)) {
 	printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
 	continue;
@@ -774,6 +785,7 @@ void Cache::assembleReport(const Settings &config, const QString filter)
       resTypeList.append("screenshot");
       resTypeList.append("wheel");
       resTypeList.append("marquee");
+      resTypeList.append("texture");
       resTypeList.append("video");
     } else if(missingOption == "textual") {
       resTypeList.append("title");
@@ -791,11 +803,13 @@ void Cache::assembleReport(const Settings &config, const QString filter)
       resTypeList.append("screenshot");
       resTypeList.append("wheel");
       resTypeList.append("marquee");
+      resTypeList.append("texture");
     } else if(missingOption == "media") {
       resTypeList.append("cover");
       resTypeList.append("screenshot");
       resTypeList.append("wheel");
       resTypeList.append("marquee");
+      resTypeList.append("texture");
       resTypeList.append("video");
     } else {
       resTypeList.append(missingOption); // If a single type is given
@@ -816,6 +830,7 @@ void Cache::assembleReport(const Settings &config, const QString filter)
        resType != "screenshot" &&
        resType != "wheel" &&
        resType != "marquee" &&
+       resType != "texture" &&
        resType != "video") {
       if(resType != "help") {
 	printf("\033[1;31mUnknown resource type '%s'!\033[0m\n", resType.toStdString().c_str());
@@ -842,6 +857,7 @@ void Cache::assembleReport(const Settings &config, const QString filter)
       printf("  \033[1;32mscreenshot\033[0m\n");
       printf("  \033[1;32mwheel\033[0m\n");
       printf("  \033[1;32mmarquee\033[0m\n");
+      printf("  \033[1;32mtexture\033[0m\n");
       printf("  \033[1;32mvideo\033[0m\n");
       printf("\n");
       return;
@@ -980,7 +996,7 @@ bool Cache::vacuumResources(const QString inputFolder, const QString filter,
       if(remove) {
 	if(res.type == "cover" || res.type == "screenshot" ||
 	   res.type == "wheel" || res.type == "marquee" ||
-	   res.type == "video") {
+	   res.type == "texture" || res.type == "video") {
 	  if(!QFile::remove(cacheDir.absolutePath() + "/" + res.value)) {
 	    printf("Couldn't purge media file '%s', skipping...\n", res.value.toStdString().c_str());
 	    continue;
@@ -1023,6 +1039,7 @@ void Cache::showStats(int verbosity)
     int screenshots = 0;
     int wheels = 0;
     int marquees = 0;
+    int textures = 0;
     int videos = 0;
     for(QMap<QString, ResCounts>::iterator it = resCountsMap.begin();
 	it != resCountsMap.end(); ++it) {
@@ -1040,6 +1057,7 @@ void Cache::showStats(int verbosity)
       screenshots += it.value().screenshots;
       wheels += it.value().wheels;
       marquees += it.value().marquees;
+      textures += it.value().textures;
       videos += it.value().videos;
     }
     printf("  Titles       : %d\n", titles);
@@ -1056,6 +1074,7 @@ void Cache::showStats(int verbosity)
     printf("  Screenshots  : %d\n", screenshots);
     printf("  Wheels       : %d\n", wheels);
     printf("  Marquees     : %d\n", marquees);
+    printf("  textures     : %d\n", textures);
     printf("  Videos       : %d\n", videos);
   } else if(verbosity > 1) {
     for(QMap<QString, ResCounts>::iterator it = resCountsMap.begin();
@@ -1074,6 +1093,7 @@ void Cache::showStats(int verbosity)
       printf("  Screenshots  : %d\n", it.value().screenshots);
       printf("  Wheels       : %d\n", it.value().wheels);
       printf("  Marquees     : %d\n", it.value().marquees);
+      printf("  textures     : %d\n", it.value().textures);
       printf("  Videos       : %d\n", it.value().videos);
     }
   }
@@ -1110,6 +1130,8 @@ void Cache::addToResCounts(const QString source, const QString type)
     resCountsMap[source].wheels++;
   } else if(type == "marquee") {
     resCountsMap[source].marquees++;
+  } else if (type == "texture") {
+    resCountsMap[source].textures++;
   } else if(type == "video") {
     resCountsMap[source].videos++;
   }
@@ -1236,6 +1258,7 @@ void Cache::validate()
   QDir screenshotsDir(cacheDir.absolutePath() + "/screenshots", "*.*", QDir::Name, QDir::Files);
   QDir wheelsDir(cacheDir.absolutePath() + "/wheels", "*.*", QDir::Name, QDir::Files);
   QDir marqueesDir(cacheDir.absolutePath() + "/marquees", "*.*", QDir::Name, QDir::Files);
+  QDir texturesDir(cacheDir.absolutePath() + "/textures", "*.*", QDir::Name, QDir::Files);
   QDir videosDir(cacheDir.absolutePath() + "/videos", "*.*", QDir::Name, QDir::Files);
 
   QDirIterator coversDirIt(coversDir.absolutePath(),
@@ -1254,6 +1277,10 @@ void Cache::validate()
 			     QDir::Files | QDir::NoDotAndDotDot,
 			     QDirIterator::Subdirectories);
 
+  QDirIterator texturesDirIt(texturesDir.absolutePath(),
+                             QDir::Files | QDir::NoDotAndDotDot,
+                             QDirIterator::Subdirectories);
+
   QDirIterator videosDirIt(videosDir.absolutePath(),
 			   QDir::Files | QDir::NoDotAndDotDot,
 			   QDirIterator::Subdirectories);
@@ -1265,6 +1292,7 @@ void Cache::validate()
   verifyFiles(screenshotsDirIt, filesDeleted, filesNoDelete, "screenshot");
   verifyFiles(wheelsDirIt, filesDeleted, filesNoDelete, "wheel");
   verifyFiles(marqueesDirIt, filesDeleted, filesNoDelete, "marquee");
+  verifyFiles(texturesDirIt, filesDeleted, filesNoDelete, "texture");
   verifyFiles(videosDirIt, filesDeleted, filesNoDelete, "video");
 
   if(filesDeleted == 0 && filesNoDelete == 0) {
@@ -1326,7 +1354,7 @@ void Cache::merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFo
 	if(overwrite) {
 	  if(res.type == "cover" || res.type == "screenshot" ||
 	     res.type == "wheel" || res.type == "marquee" ||
-	     res.type == "video") {
+	     res.type == "texture" || res.type == "video") {
 	    if(!QFile::remove(cacheDir.absolutePath() + "/" + res.value)) {
 	      printf("Couldn't remove media file '%s' for updating, skipping...\n", res.value.toStdString().c_str());
 	      continue;
@@ -1343,7 +1371,7 @@ void Cache::merge(Cache &mergeCache, bool overwrite, const QString &mergeCacheFo
     if(!resExists) {
       if(mergeResource.type == "cover" || mergeResource.type == "screenshot" ||
 	 mergeResource.type == "wheel" || mergeResource.type == "marquee" ||
-	 mergeResource.type == "video") {
+	 mergeResource.type == "texture" || mergeResource.type == "video") {
 	cacheDir.mkpath(QFileInfo(cacheDir.absolutePath() + "/" + mergeResource.value).absolutePath());
 	if(!QFile::copy(mergeCacheDir.absolutePath() + "/" + mergeResource.value,
 			cacheDir.absolutePath() + "/" + mergeResource.value)) {
@@ -1458,6 +1486,11 @@ void Cache::addResources(GameEntry &entry, const Settings &config, QString &outp
       resource.value = "marquees/" + entry.source + "/"  + entry.cacheId;
       addResource(resource, entry, cacheAbsolutePath, config, output);
     }
+    if (!entry.textureData.isNull() && config.cacheTextures) {
+      resource.type = "texture";
+      resource.value = "textures/" + entry.source + "/" + entry.cacheId;
+      addResource(resource, entry, cacheAbsolutePath, config, output);
+    }
   }
 }
 
@@ -1491,7 +1524,8 @@ void Cache::addResource(Resource &resource,
     if(resource.type == "cover" ||
        resource.type == "screenshot" ||
        resource.type == "wheel" ||
-       resource.type == "marquee") {
+       resource.type == "marquee" ||
+       resource.type == "texture") {
       QByteArray *imageData = nullptr;
       if(resource.type == "cover") {
 	imageData = &entry.coverData;
@@ -1501,6 +1535,8 @@ void Cache::addResource(Resource &resource,
 	imageData = &entry.wheelData;
       } else if(resource.type == "marquee") {
 	imageData = &entry.marqueeData;
+      } else if(resource.type == "texture") {
+	imageData = &entry.textureData;
       }
       if(config.cacheResize) {
 	QImage image;
@@ -1582,7 +1618,8 @@ void Cache::addResource(Resource &resource,
       if(resource.type == "cover" ||
 	 resource.type == "screenshot" ||
 	 resource.type == "wheel" ||
-	 resource.type == "marquee") {
+	 resource.type == "marquee" ||
+	 resource.type == "texture") {
 	// Remove old style cache image if it exists
 	if(QFile::exists(cacheFile + ".png")) {
 	  QFile::remove(cacheFile + ".png");
@@ -1875,6 +1912,19 @@ void Cache::fillBlanks(GameEntry &entry, const QString scraper)
 	f.close();
       }
       entry.marqueeSrc = source;
+    }
+  }
+  {
+    QString type = "texture";
+    QString result = "";
+    QString source = "";
+    if (fillType(type, matchingResources, result, source)) {
+      QFile f(cacheDir.absolutePath() + "/" + result);
+      if (f.open(QIODevice::ReadOnly)) {
+        entry.textureData = f.readAll();
+        f.close();
+      }
+      entry.textureSrc = source;
     }
   }
   {

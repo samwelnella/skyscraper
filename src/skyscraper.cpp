@@ -89,6 +89,7 @@ void Skyscraper::run()
   printf("Screenshots folder: '\033[1;32m%s\033[0m'\n", config.screenshotsFolder.toStdString().c_str());
   printf("Wheels folder:      '\033[1;32m%s\033[0m'\n", config.wheelsFolder.toStdString().c_str());
   printf("Marquees folder:    '\033[1;32m%s\033[0m'\n", config.marqueesFolder.toStdString().c_str());
+  printf("Textures folder:    '\033[1;32m%s\033[0m'\n", config.texturesFolder.toStdString().c_str());
   if(config.videos) {
     printf("Videos folder:      '\033[1;32m%s\033[0m'\n", config.videosFolder.toStdString().c_str());
   }
@@ -219,6 +220,11 @@ void Skyscraper::run()
   if(config.scraper == "cache" && !config.pretend)
     checkForFolder(marqueesDir);
   config.marqueesFolder = marqueesDir.absolutePath();
+
+  QDir texturesDir(config.texturesFolder);
+  if (config.scraper == "cache" && !config.pretend)
+    checkForFolder(texturesDir);
+  config.texturesFolder = texturesDir.absolutePath();
 
   if(config.videos) {
     QDir videosDir(config.videosFolder);
@@ -816,6 +822,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("cacheCovers")) {
     config.cacheCovers = settings.value("cacheCovers").toBool();
   }
+  if (settings.contains("cacheTextures")) {
+    config.cacheTextures = settings.value("cacheTextures").toBool();
+  }
   if(settings.contains("cacheScreenshots")) {
     config.cacheScreenshots = settings.value("cacheScreenshots").toBool();
   }
@@ -832,7 +841,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.scummIni = settings.value("scummIni").toString();
   }
   // Check for command line platform here, since we need it for 'platform' config.ini entries
-  if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p"))) {
+  // '_' is seen as a subcategory of the selected platform
+  if(parser.isSet("p") && Platform::getPlatforms().contains(parser.value("p").split('_').first())) {
     config.platform = parser.value("p");
   } else {
     if((!parser.isSet("flags") && parser.value("flags") != "help") &&
@@ -916,6 +926,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(settings.contains("cacheCovers")) {
     config.cacheCovers = settings.value("cacheCovers").toBool();
+  }
+  if (settings.contains("cacheTextures")) {
+    config.cacheTextures = settings.value("cacheTextures").toBool();
   }
   if(settings.contains("cacheScreenshots")) {
     config.cacheScreenshots = settings.value("cacheScreenshots").toBool();
@@ -1172,6 +1185,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   if(settings.contains("cacheCovers")) {
     config.cacheCovers = settings.value("cacheCovers").toBool();
   }
+  if (settings.contains("cacheTextures")) {
+    config.cacheTextures = settings.value("cacheTextures").toBool();
+  }
   if(settings.contains("cacheScreenshots")) {
     config.cacheScreenshots = settings.value("cacheScreenshots").toBool();
   }
@@ -1261,6 +1277,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
       printf("  \033[1;33mskipexistingscreenshots\033[0m: When generating gamelists, skip processing screenshots that already exist in the media output folder.\n");
       printf("  \033[1;33mskipexistingvideos\033[0m: When generating gamelists, skip copying videos that already exist in the media output folder.\n");
       printf("  \033[1;33mskipexistingwheels\033[0m: When generating gamelists, skip processing wheels that already exist in the media output folder.\n");
+      printf("  \033[1;33mskipexistingtextures\033[0m: When generating gamelists, skip processing textures, covers, disc art that already exist in the media output folder.\n");
       printf("  \033[1;33mskipped\033[0m: When generating a gamelist, also include games that do not have any cached data.\n");
       printf("  \033[1;33msymlink\033[0m: Forces cached videos to be symlinked to game list destination to save space. WARNING! Deleting or moving files from your cache can invalidate the links!\n");
       printf("  \033[1;33mtheinfront\033[0m: Forces Skyscraper to always try and move 'The' to the beginning of the game title when generating gamelists. By default 'The' will be moved to the end of the game titles.\n");
@@ -1281,6 +1298,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 	  config.brackets = false;
 	} else if(flag == "nocovers") {
 	  config.cacheCovers = false;
+        } else if (flag == "notextures") {
+          config.cacheTextures = false;
 	} else if(flag == "nocropblack") {
 	  config.cropBlack = false;
 	} else if(flag == "nohints") {
@@ -1311,6 +1330,8 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
 	  config.skipExistingVideos = true;
 	} else if(flag == "skipexistingwheels") {
 	  config.skipExistingWheels = true;
+        } else if (flag == "skipexistingtextures") {
+          config.skipExistingTextures = true;
 	} else if(flag == "skipped") {
 	  config.skipped = true;
 	} else if(flag == "symlink") {
@@ -1364,6 +1385,9 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   if(parser.isSet("skipexistingmarquees")) {
     config.skipExistingMarquees = true;
+  }
+  if (parser.isSet("skipexistingtextures")) {
+    config.skipExistingTextures = true;
   }
   if(parser.isSet("skipped")) {
     config.skipped = true;
@@ -1485,6 +1509,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   config.screenshotsFolder = frontend->getScreenshotsFolder();
   config.wheelsFolder = frontend->getWheelsFolder();
   config.marqueesFolder = frontend->getMarqueesFolder();
+  config.texturesFolder = frontend->getTexturesFolder();
   config.videosFolder = frontend->getVideosFolder();
 
   // Choose default scraper for chosen platform if none has been set yet

@@ -126,6 +126,9 @@ void AbstractScraper::getGameData(GameEntry &game)
     case MARQUEE:
       getMarquee(game);
       break;
+    case TEXTURE:
+      getTexture(game);
+      break;
     case VIDEO:
       if(config->videos) {
 	getVideo(game);
@@ -376,6 +379,35 @@ void AbstractScraper::getMarquee(GameEntry &game)
   if(netComm->getError() == QNetworkReply::NoError &&
      image.loadFromData(netComm->getData())) {
     game.marqueeData = netComm->getData();
+  }
+}
+
+void AbstractScraper::getTexture(GameEntry &game) {
+  if (texturePre.isEmpty()) {
+    return;
+  }
+
+  for (const auto &nom : texturePre) {
+    if (!checkNom(nom)) {
+      return;
+    }
+  }
+
+  for (const auto &nom : texturePre) {
+    nomNom(nom);
+  }
+
+  QString textureUrl =
+      data.left(data.indexOf(texturePost.toUtf8())).replace("&amp;", "&");
+  if (textureUrl.left(4) != "http") {
+    textureUrl.prepend(baseUrl + (textureUrl.left(1) == "/" ? "" : "/"));
+  }
+  netComm->request(textureUrl);
+  q.exec();
+  QImage image;
+  if (netComm->getError() == QNetworkReply::NoError &&
+      image.loadFromData(netComm->getData())) {
+    game.textureData = netComm->getData();
   }
 }
 

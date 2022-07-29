@@ -57,6 +57,7 @@ ScreenScraper::ScreenScraper(Settings *config,
   fetchOrder.append(COVER);
   fetchOrder.append(WHEEL);
   fetchOrder.append(MARQUEE);
+  fetchOrder.append(TEXTURE);
   fetchOrder.append(VIDEO);
 }
 
@@ -227,6 +228,11 @@ void ScreenScraper::getGameData(GameEntry &game)
     case MARQUEE:
       if(config->cacheMarquees) {
 	getMarquee(game);
+      }
+      break;
+    case TEXTURE:
+      if (config->cacheTextures) {
+        getTexture(game);
       }
       break;
     case VIDEO:
@@ -413,6 +419,29 @@ void ScreenScraper::getMarquee(GameEntry &game)
       }
       if(moveOn)
 	break;
+    }
+  }
+}
+
+void ScreenScraper::getTexture(GameEntry &game) {
+  QString url = getJsonText(
+      jsonObj["medias"].toArray(), REGION,
+      QList<QString>({"support-2D", "support-2d", "support-texture"}));
+  if (!url.isEmpty()) {
+    bool moveOn = true;
+    for (int retries = 0; retries < RETRIESMAX; ++retries) {
+      limiter.exec();
+      netComm->request(url);
+      q.exec();
+      QImage image;
+      if (netComm->getError(config->verbosity) == QNetworkReply::NoError &&
+          netComm->getData().size() >= MINARTSIZE &&
+          image.loadFromData(netComm->getData())) {
+        game.textureData = netComm->getData();
+      } else {
+        moveOn = false;
+      }
+      if (moveOn) break;
     }
   }
 }
@@ -784,6 +813,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "109";
   } else if(platform == "snes") {
     return "4";
+  } else if (platform.contains("steam")) {
+    return "138";
   } else if(platform == "switch") {
     return "225";
   } else if(platform == "ti99") {

@@ -518,7 +518,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "ps2") {
     formats.append("*.iso *.cue *.img *.mdf *.z *.z2 *.bz2 *.dump *.cso *.ima *.gz");
   } else if(platform == "ps3") {
-    formats.append("*.iso *.bin");
+    formats.append("*.iso *.bin *.pkg");
   } else if(platform == "ps4") {
     formats.append("*.iso *.bin");
   } else if(platform == "ps5") {
