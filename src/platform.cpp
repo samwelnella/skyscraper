@@ -43,6 +43,7 @@ QStringList Platform::getPlatforms()
   QStringList platforms;
   platforms.append("3do");
   platforms.append("3ds");
+  platforms.append("actionmax");
   platforms.append("amiga");
   platforms.append("amigacd32");
   platforms.append("amstradcpc");
@@ -90,6 +91,7 @@ QStringList Platform::getPlatforms()
   platforms.append("msx2");
   platforms.append("n64");
   platforms.append("naomi");
+  platforms.append("naomi2");
   platforms.append("nds");
   platforms.append("neogeo");
   platforms.append("neogeocd");
@@ -133,6 +135,7 @@ QStringList Platform::getPlatforms()
   platforms.append("wonderswancolor");
   platforms.append("x68000");
   platforms.append("x1");
+  platforms.append("xbox");
   platforms.append("zmachine");
   platforms.append("zx81");
   platforms.append("zxspectrum");
@@ -146,6 +149,9 @@ QStringList Platform::getScrapers(QString platform)
   if(platform == "3do") {
     scrapers.append("screenscraper");
   } else if(platform == "3ds") {
+    scrapers.append("screenscraper");
+  } else if(platform == "actionmax") {
+    scrapers.append("thegamesdb");
     scrapers.append("screenscraper");
   } else if(platform == "amiga") {
     scrapers.append("openretro");
@@ -247,6 +253,8 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform == "n64") {
     scrapers.append("screenscraper");
   } else if(platform == "naomi") {
+    scrapers.append("screenscraper");
+  } else if(platform == "naomi2") {
     scrapers.append("screenscraper");
   } else if(platform == "nds") {
     scrapers.append("screenscraper");
@@ -347,6 +355,9 @@ QStringList Platform::getScrapers(QString platform)
   } else if(platform  == "zxspectrum") {
     scrapers.append("worldofspectrum");
     scrapers.append("screenscraper");
+  } else if(platform  == "xbox") {
+    scrapers.append("screenscraper");
+    scrapers.append("thegamesdb");
   }
 
   // Always add 'cache' as the last one
@@ -372,6 +383,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.iso *.cue *.chd");
   } else if(platform == "3ds") {
     formats.append("*.3ds");
+  } else if(platform == "actionmax") {
+    formats.append("*.daphne *.singe");
   } else if(platform == "amiga") {
     formats.append("*.uae *.adf *.dms *.adz *.rp9 *.lha *.cue *.img *.iso *.hdf");
   } else if(platform == "amigacd32") {
@@ -465,7 +478,9 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
   } else if(platform == "n64") {
     formats.append("*.z64 *.n64 *.v64");
   } else if(platform == "naomi") {
-    formats.append("*.bin *.dat");
+    formats.append("*.bin *.dat *.chd");
+  } else if(platform == "naomi2") {
+    formats.append("*.bin *.dat *.chd");
   } else if(platform == "nds") {
     formats.append("*.nds");
   } else if(platform == "neogeo") {
@@ -550,6 +565,8 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
     formats.append("*.dim *.m3u");
   } else if(platform == "x1") {
     formats.append("*.dx1 *.2d *.2hd *.tfd *.d88 *.88d *.hdm *.xdf *.dup *.cmd");
+  } else if(platform == "xbox") {
+    formats.append("*.iso *.xbe");
   } else if(platform == "zmachine") {
     formats.append("*.dat *.z1 *.z2 *.z3 *.z4 *.z5 *.z6 *.z7 *.z8");
   } else if(platform == "zx81") {
@@ -567,6 +584,8 @@ QString Platform::getDefaultScraper(QString platform)
   if(platform == "3do") {
     scraper = "cache";
   } else if(platform == "3ds") {
+    scraper = "cache";
+  } else if(platform == "actionmax") {
     scraper = "cache";
   } else if(platform == "amiga") {
     scraper = "cache";
@@ -662,6 +681,8 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "cache";
   } else if(platform == "naomi") {
     scraper = "cache";
+  } else if(platform == "naomi2") {
+    scraper = "cache";
   } else if(platform == "nds") {
     scraper = "cache";
   } else if(platform == "neogeo") {
@@ -748,6 +769,8 @@ QString Platform::getDefaultScraper(QString platform)
     scraper = "cache";
   } else if(platform == "x1") {
     scraper = "cache";
+  } else if(platform == "xbox") {
+    scraper = "cache";
   } else if(platform == "zmachine") {
     scraper = "cache";
   } else if(platform == "zx81") {
@@ -769,6 +792,10 @@ QStringList Platform::getAliases(QString platform)
   // the same as the platform name and has already been appended above.
   if(platform == "3ds") {
     aliases.append("nintendo 3ds");
+  } else if(platform == "actionmax") {
+    aliases.append("Action Max");
+    aliases.append("singe");
+    aliases.append("daphne");
   } else if(platform == "amiga") {
     aliases.append("amiga (aga)");
     aliases.append("amiga cdtv");
@@ -1302,7 +1329,7 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("msx");
     aliases.append("msx2");
     aliases.append("msx2+");
-    aliases.append("msx r turbo");
+//     aliases.append("msx r turbo");
   } else if(platform == "n64") {
     aliases.append("nintendo 64");
   } else if(platform == "naomi") {
@@ -1371,6 +1398,10 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("gaelco");
     aliases.append("mega-tech");
     aliases.append("mega-play");
+  } else if(platform == "naomi2") {
+    aliases.append("mame");
+    aliases.append("fba");
+    aliases.append("arcade");
   } else if(platform == "nds") {
     aliases.append("nintendo ds");
   } else if(platform == "neogeo") {
@@ -1547,6 +1578,8 @@ QStringList Platform::getAliases(QString platform)
     aliases.append("x1");
   } else if(platform == "sharp x1") {
     aliases.append("z-machine");
+  } else if(platform == "xbox") {
+    aliases.append("ogxbox");
   } else if(platform == "zxspectrum") {
     aliases.append("sinclair zx spectrum");
     aliases.append("zx spectrum");

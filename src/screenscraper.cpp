@@ -638,6 +638,8 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "130";
   } else if(platform == "cdtv") {
     return "129";
+  } else if(platform == "actionmax") {
+    return "81";
   } else if(platform == "amstradcpc") {
     return "65";
   } else if(platform == "apple2") {
@@ -747,7 +749,7 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "pc") {
     return "135";
   } else if(platform == "pc88") {
-    return "na";
+    return "221";
   } else if(platform == "pc98") {
     return "208";
   } else if(platform == "pcfx") {
@@ -804,10 +806,12 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "45";
   } else if(platform == "wonderswancolor") {
     return "46";
+  } else if(platform == "xbox") {
+    return "32";  
   } else if(platform == "x68000") {
     return "79";
   } else if(platform == "x1") {
-    return "na";
+    return "220";
   } else if(platform == "zmachine") {
     return "na";
   } else if(platform == "zx81") {
