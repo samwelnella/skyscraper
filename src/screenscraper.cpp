@@ -78,7 +78,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
     netComm->request(gameUrl);
     q.exec();
     data = netComm->getData();
-    
+
     QByteArray headerData = data.left(1024); // Minor optimization with minimal more RAM usage
     // Do error checks on headerData. It's more stable than checking the potentially faulty JSON
     if(headerData.isEmpty()) {
@@ -109,7 +109,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
 	continue;
       }
     }
-    
+
     // Fix faulty JSON that is sometimes received back from ScreenScraper
     data.replace("],\n\t\t}", "]\n\t\t}");
 
@@ -140,7 +140,7 @@ void ScreenScraper::getSearchResults(QList<GameEntry> &gameEntries,
       // Try again. We handle important errors above, so something weird is going on here
       continue;
     }
-    
+
     // Check if user has exceeded daily request limit
     if(!jsonObj["response"].toObject()["ssuser"].toObject()["requeststoday"].toString().isEmpty() && !jsonObj["response"].toObject()["ssuser"].toObject()["maxrequestsperday"].toString().isEmpty()) {
       reqRemaining = jsonObj["response"].toObject()["ssuser"].toObject()["maxrequestsperday"].toString().toInt() - jsonObj["response"].toObject()["ssuser"].toObject()["requeststoday"].toString().toInt();
@@ -541,7 +541,7 @@ QList<QString> ScreenScraper::getSearchNames(const QFileInfo &info)
     QFile romFile(info.absoluteFilePath());
     romFile.open(QIODevice::ReadOnly);
     while(!romFile.atEnd()) {
-      
+
       QByteArray dataSeg = romFile.read(1024);
       md5.addData(dataSeg);
       sha1.addData(dataSeg);
@@ -813,7 +813,7 @@ QString ScreenScraper::getPlatformId(const QString platform)
     return "109";
   } else if(platform == "snes") {
     return "4";
-  } else if (platform.contains("steam")) {
+  } else if (platform == "steam") {
     return "138";
   } else if(platform == "switch") {
     return "225";
@@ -838,7 +838,7 @@ QString ScreenScraper::getPlatformId(const QString platform)
   } else if(platform == "wonderswancolor") {
     return "46";
   } else if(platform == "xbox") {
-    return "32";  
+    return "32";
   } else if(platform == "x68000") {
     return "79";
   } else if(platform == "x1") {
