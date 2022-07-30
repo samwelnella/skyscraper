@@ -76,6 +76,7 @@ The type to be exported. Can be:
 * cover
 * wheel
 * marquee
+* texture
 
 #### 'resource' attribute [from v2.7.6] (Optional)
 The resource attribute can be set to one of the following:
@@ -83,6 +84,7 @@ The resource attribute can be set to one of the following:
 * cover
 * wheel
 * marquee
+* texture
 
 For instance, if you wish to export a 'marquee' image but want it to make use of the 'wheel' resource instead, you can set ```<output type="marquee" resource="wheel"/>```. It will then export a 'marquee' but use the raw unmanipulated 'wheel' image when doing so. So if your frontend theme, such as some EmulationStation themes, makes use of the 'marquee' artwork, it will then be using the 'wheel' for it. If this attribute is left out, 'resource' will be set to the same as 'type'.
 
