@@ -3,19 +3,19 @@ A powerful and versatile yet easy to use game scraper written in C++ for use wit
 
 All Skyscraper features are [well-documented](https://github.com/detain/skyscraper/tree/master/docs) and there's also a [F.A.Q](https://github.com/detain/skyscraper/blob/master/docs/FAQ.md). If you still have questions after reading the documentation, please consider asking them on the [RetroPie subreddit](https://www.reddit.com/r/RetroPie/) or in the official [RetroPie forums](https://retropie.org.uk/forum). The `Issues` page here on Github is for bug reports and feature requests only. Thanks!
 
-#### 🎮Platforms Supported (set with '-p'):
+## 🎮Platforms Supported (set with '-p'):
 Check the full list of platforms [here](docs/PLATFORMS.md).
 
-#### 🕹Frontends Supported (set with '-f'):
+## 🕹Frontends Supported (set with '-f'):
 * EmulationStation
 * AttractMode
 * Pegasus
 
-##### 🧑‍💻Code contributions
-Pull Requests are not currently accepted. Due to wanting to pursue other projects after having worked on Skyscraper for 3 years, I am currently only fixing scraper-breaking bugs in Skyscraper. For any functionality beyond what is already in place, feel free to fork Skyscraper and fit it to your needs. I am no longer actively considering or commenting user feature requests or pull requests. When / if this changes, this text will be updated.
-
-#### 📚Supported scraping modules (set with '-s')
+## 📚Supported scraping modules (set with '-s')
 Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md) and read more about the resource cache [here](docs/CACHE.md).
+
+## 🧑‍💻Code contributions
+Pull Requests are not currently accepted. Due to wanting to pursue other projects after having worked on Skyscraper for 3 years, I am currently only fixing scraper-breaking bugs in Skyscraper. For any functionality beyond what is already in place, feel free to fork Skyscraper and fit it to your needs. I am no longer actively considering or commenting user feature requests or pull requests. When / if this changes, this text will be updated.
 
 ## Skyscraper JSON Enhancement by torresflo
 
