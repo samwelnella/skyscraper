@@ -33,19 +33,19 @@ jobs:
             target: android-arm
     steps:
     - name: Checkout sources
-      uses: actions/checkout@v2
-    - name: Install Qt
-      if: startsWith(matrix.os, 'windows')
-      uses: jurplel/install-qt-action@master
-      with:
-        host: 'windows'
-        target: 'desktop'
-        arch: 'win64_msvc2019_64'
-        install-deps: 'true'
-        modules: 'qtwebengine'
-        archives: 'qtbase'
-        cache: 'false'
-        tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
+      uses: actions/checkout@v3
+#    - name: Install Qt
+#      if: startsWith(matrix.os, 'windows')
+#      uses: jurplel/install-qt-action@master
+#      with:
+#        host: 'windows'
+#        target: 'desktop'
+#        arch: 'win64_msvc2019_64'
+#        install-deps: 'true'
+#        modules: 'qtwebengine'
+#        archives: 'qtbase'
+#        cache: 'false'
+#        tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
     - name: Install deps
       run: bash ./scripts/deps "${{ matrix.target }}"
     - name: Build
