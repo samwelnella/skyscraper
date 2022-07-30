@@ -643,7 +643,7 @@ void AbstractScraper::runPasses(QList<GameEntry> &gameEntries, const QFileInfo &
 }
 
 bool AbstractScraper::platformMatch(QString found, QString platform) {
-  for(const auto &p: Platform::getAliases(platform)) {
+  for(const auto &p: Platform::get().getAliases(platform)) {
     if(found.toLower() == p) {
       return true;
     }

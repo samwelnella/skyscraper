@@ -69,6 +69,9 @@ private:
 
   QString getPlatformId(const QString platform) override;
 
+  void loadConfig(const QString& configPath);
+  QMap<QString, int> platformToId;
+
   QString region;
   QString lang;
   QJsonObject jsonObj;
