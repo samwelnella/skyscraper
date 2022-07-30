@@ -132,7 +132,7 @@ QString Platform::getFormats(QString platform, QString extensions, QString addEx
 }
 
 // If user provides no scraping source with '-s' this sets the default for the platform
-QString Platform::getDefaultScraper()
+QString Platform::getDefaultScraper() const
 {
   return "cache";
 }
