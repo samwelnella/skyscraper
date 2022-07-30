@@ -6,7 +6,7 @@
 */
 $platforms = [];
 $platformIdx = [];
-preg_match_all('/^(QString|QStringList) Platform::get(?P<list>[^\(]*)\([^\)]*\)(?P<data>.*)^}/msuU', file_get_contents(__DIR__.'/src/platform.cpp'), $matches);
+preg_match_all('/^(QString|QStringList) Platform::get(?P<list>[^\(]*)\([^\)]*\)(?P<data>.*)^}/msuU', file_get_contents(__DIR__.'/../src/platform.cpp'), $matches);
 foreach ($matches['list'] as $idx => $list) {
     $list = strtolower($list);
     $data = $matches['data'][$idx];
@@ -55,4 +55,4 @@ foreach ($platforms as $platform)
     $json[] = json_encode($platform,  JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 $json = "{\n\t\"platforms\":\n\t[\n\t\t".str_replace(['","', '", "scrapers"'], ['", "', '","scrapers"'], implode(",\n\t\t", $json))."\n\t]\n}";
 echo $json;
-file_put_contents('platforms_new.json', $json);
+file_put_contents(__DIR__.'/../platforms_new.json', $json);
