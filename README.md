@@ -1,8 +1,23 @@
-# Skyscraper Enhanced by torresflo
+# 🏢Skyscraper by Lars Muldjord
+A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system (macOS and Windows too, but not officially supported). It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to generate a game list and artwork for the chosen frontend by combining all of the cached resources.
 
-This is a fork of the famous project [Skyscraper by Lars Muldjord](https://github.com/detain/skyscraper) (see the readme of the original project below).
+All Skyscraper features are [well-documented](https://github.com/detain/skyscraper/tree/master/docs) and there's also a [F.A.Q](https://github.com/detain/skyscraper/blob/master/docs/FAQ.md). If you still have questions after reading the documentation, please consider asking them on the [RetroPie subreddit](https://www.reddit.com/r/RetroPie/) or in the official [RetroPie forums](https://retropie.org.uk/forum). The `Issues` page here on Github is for bug reports and feature requests only. Thanks!
 
-## What's new?
+#### 🎮Platforms Supported (set with '-p'):
+Check the full list of platforms [here](docs/PLATFORMS.md).
+
+#### 🕹Frontends Supported (set with '-f'):
+* EmulationStation
+* AttractMode
+* Pegasus
+
+##### 🧑‍💻Code contributions
+Pull Requests are not currently accepted. Due to wanting to pursue other projects after having worked on Skyscraper for 3 years, I am currently only fixing scraper-breaking bugs in Skyscraper. For any functionality beyond what is already in place, feel free to fork Skyscraper and fit it to your needs. I am no longer actively considering or commenting user feature requests or pull requests. When / if this changes, this text will be updated.
+
+#### 📚Supported scraping modules (set with '-s')
+Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md) and read more about the resource cache [here](docs/CACHE.md).
+
+## Skyscraper JSON Enhancement by torresflo
 
 The main goal of this fork is to allow users to easily configurate and add platforms without having the needs to edit the code source directly.
 
@@ -12,40 +27,11 @@ Currently, the only scraper supported by this feature is Screenscraper. This fea
 
 These 2 files are pretty straigthforward to edit if you want to add a new platform (as an example I added myself the platforms OpenBOR and Solarus). These files are copied in the folder `/usr/local/etc/skyscraper/` at the first run of the program if you want to edit them after an installation.  
 
-## Installation
+### Installation
 
 You can easilly install Skyscraper Enhanced by adding the script in the retropie-setup folder ([here](retropie-setup/skyscraperenhanced.sh)) in the scriptmodules folder of your retropie setup installation.
 
 This way, you can install and run the program through the retropie setup menu like the original Skyscraper. Note that the same config and installation folders of the original Skyscraper will be used instead of having everything duplicated in specific folders.
-
-## Original README
-
-Below is the original README.md. Everything is still usefull excepting the part about the platforms as you can now add/remove/edit any platform directly in the config files.
-
-<br>
-
----
-
-<br>
-
-# Skyscraper by Lars Muldjord
-A powerful and versatile yet easy to use game scraper written in C++ for use with multiple frontends running on a Linux system (macOS and Windows too, but not officially supported). It scrapes and caches various game resources from various scraping sources, including media such as screenshot, cover and video. It then gives you the option to generate a game list and artwork for the chosen frontend by combining all of the cached resources.
-
-All Skyscraper features are [well-documented](https://github.com/detain/skyscraper/tree/master/docs) and there's also a [F.A.Q](https://github.com/detain/skyscraper/blob/master/docs/FAQ.md). If you still have questions after reading the documentation, please consider asking them on the [RetroPie subreddit](https://www.reddit.com/r/RetroPie/) or in the official [RetroPie forums](https://retropie.org.uk/forum). The `Issues` page here on Github is for bug reports and feature requests only. Thanks!
-
-##### Code contributions
-Pull Requests are not currently accepted. Due to wanting to pursue other projects after having worked on Skyscraper for 3 years, I am currently only fixing scraper-breaking bugs in Skyscraper. For any functionality beyond what is already in place, feel free to fork Skyscraper and fit it to your needs. I am no longer actively considering or commenting user feature requests or pull requests. When / if this changes, this text will be updated.
-
-#### Supported platforms (set with '-p'):
-Check the full list of platforms [here](docs/PLATFORMS.md).
-
-#### Supported scraping modules (set with '-s')
-Skyscraper supports a variety of different scraping sources called *scraping modules*. Use these to gather game data into the Skyscraper resource cache. Check the full list of scraping modules [here](docs/SCRAPINGMODULES.md) and read more about the resource cache [here](docs/CACHE.md).
-
-#### Supported frontends (set with '-f'):
-* EmulationStation
-* AttractMode
-* Pegasus
 
 ## How to install Skyscraper
 Follow the steps below to install the latest version of Skyscraper. Lines beginning with `$` signifies a command you need run in a terminal on the machine you wish to install it on.
