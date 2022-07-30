@@ -148,11 +148,16 @@ Check the full artwork documentation [here](docs/ARTWORK.md)
 * Add support for grouping multi-disk games so they only have one entry in the gamelists. See issues/232 (Thank you to 'igno2k' for suggesting this)
 
 #### Version 3.7.7-2
+* Added script to quickly generate the mapMap.csv
+* Added script to quickly generate the platforms.json from an existing platform.cpp file
+* Moved the list of platforms and thier associated scrapers, file masks, and aliases to be loaded from a JSON file instead of hardcoded in CPP from [torresflo/skyscraper-enhanced](https://github.com/torresflo/skyscraper-enhanced)
+* Added 'texture' image type to be stored in textures dir from [InfiRandia/skyscraper](https://github.com/InfiRandia/skyscraper)
 * Updated MAME map to 0.245
 * Added 'actionmax', 'naomi2', 'ps3', 'ps4', 'ps5', and 'xbox' platforms
 * Added '*.chd' to 'naomi' and 'naomi2'
 * Added '*.nca' to 'switch'
 * Fixed the 'pc88' and 'x1' ScreenScraper IDs
+* Added automatic generation of compiled builds on new tag
 
 #### Version 3.7.7 (28th June 2022)
 * Added '*.m3u' to 'segacd' platform (Thank you to user 'bmn001' for suggesting it)
