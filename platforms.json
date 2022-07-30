@@ -23,6 +23,7 @@
 		{"name":"c16","scrapers":["screenscraper"],"formats":["*.crt", "*.d64", "*.prg", "*.tap", "*.t64", "*.g64", "*.x64", "*.vsf"],"aliases":["plus/4", "commodore plus/4", "commodore 16", "commodore 16, plus/4"]},
 		{"name":"c64","scrapers":["screenscraper"],"formats":["*.crt", "*.d64", "*.prg", "*.tap", "*.t64", "*.g64", "*.x64", "*.vsf"],"aliases":["commodore 64", "commodore c64/128"]},
 		{"name":"c128","scrapers":["screenscraper"],"formats":["*.crt", "*.d64", "*.prg", "*.tap", "*.t64", "*.g64", "*.x64", "*.vsf"],"aliases":["commodore 128", "commodore 64", "commodore c64/128"]},
+		{"name":"cdi","scrapers":["screenscraper"],"formats":["*.chd"],"aliases":["cd-i", "phillips cd-i", "phillips cdi"]},
 		{"name":"channelf","scrapers":["screenscraper"],"formats":["*.bin", "*.rom"],"aliases":["fairchild channel f", "channel f"]},
 		{"name":"coco","scrapers":["screenscraper"],"formats":["*.cas", "*.wav", "*.bas", "*.asc", "*.dmk", "*.jvc", "*.os9", "*.dsk", "*.vdk", "*.rom", "*.ccc", "*.sna"],"aliases":["trs-80 color computer", "trs-80 coco"]},
 		{"name":"coleco","scrapers":["screenscraper"],"formats":["*.bin", "*.col", "*.rom"],"aliases":["colecovision"]},
