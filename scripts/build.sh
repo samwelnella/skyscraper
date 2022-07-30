@@ -1,4 +1,4 @@
-TERMUX_PKG_HOMEPAGE=https://github.com/muldjord/skyscraper
+TERMUX_PKG_HOMEPAGE=https://github.com/detain/skyscraper
 TERMUX_PKG_DESCRIPTION="TODO"
 TERMUX_PKG_LICENSE="Apache-2.0"
 TERMUX_PKG_MAINTAINER="@denisidoro"
