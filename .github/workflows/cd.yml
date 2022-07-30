@@ -33,7 +33,7 @@ jobs:
             target: android-arm
     steps:
     - name: Checkout sources
-      uses: actions/checkout@master
+      uses: actions/checkout@v2
     - name: Install Qt
       if: startsWith(matrix.os, 'windows')
       uses: jurplel/install-qt-action@master
