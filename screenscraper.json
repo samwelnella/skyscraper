@@ -20,8 +20,8 @@
 		{"name":"atarilynx","id":28},
 		{"name":"atarist","id":42},
 		{"name":"atomiswave","id":75},
-		{"name":"c128","id":"na"},
-		{"name":"c16","id":"na"},
+		{"name":"c128","id":66},
+		{"name":"c16","id":99},
 		{"name":"c64","id":66},
 		{"name":"cd32","id":130},
 		{"name":"cdi","id":133},
@@ -96,7 +96,7 @@
 		{"name":"x1","id":220},
 		{"name":"x68000","id":79},
 		{"name":"xbox","id":32},
-		{"name":"zmachine","id":"na"},
+		{"name":"zmachine","id":215},
 		{"name":"zx81","id":77},
 		{"name":"zxspectrum","id":76}
 	]
