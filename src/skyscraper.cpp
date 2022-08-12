@@ -48,6 +48,7 @@
 #include "strtools.h"
 
 #include "emulationstation.h"
+#include "retrobat.h"
 #include "attractmode.h"
 #include "pegasus.h"
 
@@ -677,12 +678,15 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
   }
   settings.endGroup();
   if(parser.isSet("f") && (parser.value("f") == "emulationstation" ||
+			   parser.value("f") == "retrobat" ||
 			   parser.value("f") == "attractmode" ||
 			   parser.value("f") == "pegasus")) {
     config.frontend = parser.value("f");
   }
   if(config.frontend == "emulationstation") {
     frontend = new EmulationStation;
+  } else if(config.frontend == "retrobat") {
+    frontend = new RetroBat;
   } else if(config.frontend == "attractmode") {
     frontend = new AttractMode;
   } else if(config.frontend == "pegasus") {
@@ -1106,7 +1110,7 @@ void Skyscraper::loadConfig(const QCommandLineParser &parser)
     config.mediaFolder = settings.value("mediaFolder").toString();
     mediaFolderSet = true;
   }
-  if(settings.contains("mediaFolderHidden") && config.frontend == "emulationstation") {
+  if(settings.contains("mediaFolderHidden") && (config.frontend == "emulationstation" || config.frontend == "retrobat")) {
     config.mediaFolderHidden = settings.value("mediaFolderHidden").toBool();
   }
   if(settings.contains("skipped")) {

@@ -16,6 +16,12 @@ This is the default frontend used when generating a game list with Skyscraper. I
 ##### Metadata preservation
 Skyscraper will preserve the following metadata when re-generating a game list for EmulationStation: `favorite`, `hidden`, `playcount`, `lastplayed`, `kidgame`, `sortname`.
 
+#### RetroBat
+* Default game list location: `/home/pi/USER/RetroPie/roms/PLATFORM`
+* Default game list filename: `gamelist.xml`
+
+This is modeled after EmualtionStation as it uses it with slight differences.
+
 #### Attract-Mode
 * Default game list location: `/home/pi/USER/.attract/romlists`
 * Default game list filename: `<EMULATOR/PLATFORM>.txt`
