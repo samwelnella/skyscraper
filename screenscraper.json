@@ -96,6 +96,7 @@
 		{"name":"x1","id":220},
 		{"name":"x68000","id":79},
 		{"name":"xbox","id":32},
+		{"name":"xbox360","id":33},
 		{"name":"zmachine","id":215},
 		{"name":"zx81","id":77},
 		{"name":"zxspectrum","id":76}
